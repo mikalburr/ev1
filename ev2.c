@@ -8,41 +8,31 @@ int const lastFloor = 15;
 char const yes[] = "Yes";
 char const no[] = "No\n";
 int ASCIInum = 48;
-  
-void swap(int* x, int* a)
-{
+ 
+//swap ints
+void swap(int* x, int* a){
     int temp = *x;
     *x = *a;
     *a = temp;
 }
-  
-// Function to perform Selection Sort
-void selectionSort(int arr[], int n)
-{
+
+//selection sort
+void selectionSort(int arr[], int n){
     int i, j, min_idx;
-  
-    // One by one move boundary of unsorted subarray
     for (i = 0; i < n - 1; i++) {
-  
-        // Find the minimum element in unsorted array
         min_idx = i;
         for (j = i + 1; j < n; j++)
             if (arr[j] < arr[min_idx])
                 min_idx = j;
-  
-        // Swap the found minimum element
-        // with the first element
-        swap(&arr[min_idx], &arr[i]);
+    swap(&arr[min_idx], &arr[i]);
     }
 }
   
-// Function to print an array
-void printArray(int arr[], int size)
-{
+//print array
+void printArray(int arr[], int size){
     int i;
     for (i = 0; i < size; i++)
         printf("%d ", arr[i]);
-    
     printf("\n");
 }
 
@@ -54,16 +44,17 @@ int main (){
     char line[244];
     
     while ( input != LOOPBREAK ){
+        size = 1;
         /* ask change floor [Yes/No] */
         printf( "Would you like to go to a new floor? [ Yes or No ]\n" );
         fgets( inputC , 4 , stdin );
         input = strcmp( inputC , yes );
-        setbuf(stdin, NULL);
         /* yes */
         if ( input == 0 ) {
             /* ask for floors */
             printf( "What floors would you like to go to? \nCurrent floor: %d \nTop floor: %d\nfloor: ", floor , floors[lastFloor] );
             setbuf(stdin, NULL);
+            
             fgets( line, sizeof(line) , stdin );
 
             /* read line and put them into int arrary */
@@ -81,11 +72,11 @@ int main (){
                     i++; i++;
                 }
             }
-
             //sort floors
             selectionSort(goToFloors, size);
-            
-            for(int i = 1 ; i < size ; i++){
+          
+            for(int i = 0 ; i < size ; i++){
+                printf("%d  ",goToFloors[i]);
                 /* Same Floor */
                 if ( goToFloors[i] == floor ){
                     printf( "You are already on this floor!\n" );
@@ -99,12 +90,10 @@ int main (){
                         printf( "%d, " , floor );
                         floor++;
                     }
-
                     printf( "%d, DING\n", floor );
                 /* Going Down */
                 } else if ( goToFloors[i] < floor){
-                    while ( goToFloors[i] < floor )
-                    {
+                    while ( goToFloors[i] < floor ){
                         printf( "%d, " , floor );
                         floor--;
                     }
