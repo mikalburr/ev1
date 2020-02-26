@@ -39,24 +39,25 @@ void printArray(int arr[], int size){
 int main (){ 
     int const floors[ 16 ] = { 0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10 , 11 , 12 , 13 , 14 , 15 }; //floors
     int * goToFloors = (int*)malloc(0*sizeof(int)); //array of inputs
-    int floor = 0, size = 1, input = 0; // floor, current input
+    int floor = 0, size = 1, input = 0, c; // floor, current input
     char inputC[4]; //char input
     char line[244];
     
-    while ( input != LOOPBREAK ){
+    while ( input != LOOPBREAK )
+    {
         size = 1;
+        goToFloors = (int*)malloc(0*sizeof(int));
         /* ask change floor [Yes/No] */
         printf( "Would you like to go to a new floor? [ Yes or No ]\n" );
         fgets( inputC , 4 , stdin );
         input = strcmp( inputC , yes );
         /* yes */
         if ( input == 0 ) {
+            while ((c = getchar()) != '\n' && c != EOF) { }
             /* ask for floors */
             printf( "What floors would you like to go to? \nCurrent floor: %d \nTop floor: %d\nfloor: ", floor , floors[lastFloor] );
-            setbuf(stdin, NULL);
-            
+            fflush(stdin);
             fgets( line, sizeof(line) , stdin );
-
             /* read line and put them into int arrary */
             for( int i = 0 , j = 0 ; i < strlen(line) ; i++, size++, j++ ){
                 inputC[i] = line[i];
@@ -74,9 +75,9 @@ int main (){
             }
             //sort floors
             selectionSort(goToFloors, size);
-          
-            for(int i = 0 ; i < size ; i++){
-                printf("%d  ",goToFloors[i]);
+            //printArray(goToFloors,size);
+            for( int i = 1 ; i < size ; i++){
+                //printf("floor: %d to: %d  ", floor, goToFloors[i]);
                 /* Same Floor */
                 if ( goToFloors[i] == floor ){
                     printf( "You are already on this floor!\n" );
@@ -118,9 +119,9 @@ int main (){
             } else {
                 printf( "Not a valid input. Try Again [ Yes or No ]\n" );
             }
-
         }
+        //free goToFloors
+        free(goToFloors);
     }
-    //FREE MEMORY
-    free(goToFloors);
+    
 }
